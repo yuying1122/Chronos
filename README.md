@@ -9,8 +9,6 @@ Chronos ⏳
 - MySQL
 - JPA (Hibernate)
 - Redis
-- Docker
-- GitHub Actions (CI/CD 예정)
 
 ## 📌 주요 기능
 
