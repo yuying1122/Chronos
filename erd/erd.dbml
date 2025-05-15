@@ -1,0 +1,31 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table members {
+  id int [primary key, increment]
+  email varchar [unique]
+  password varchar
+  nickname varchar
+  created_at timestamp
+}
+
+Table schedules {
+  id int [primary key, increment]
+  member_id int  
+  category_id int  
+  title varchar 
+  description text
+  start_at datetime
+  end_at datetime 
+}
+
+Table categories {    
+  id int [primary key, increment]
+  member_id int 
+  name varchar
+  color varchar     
+}
+
+Ref: "schedules"."member_id" < "members"."id"
+Ref: "schedules"."category_id" < "categories"."id"
+Ref: "categories"."member_id" < "members"."id"
