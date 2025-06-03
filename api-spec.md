@@ -8,12 +8,13 @@
 |---------------|------|-------|
 | /api/members/signup | POST | 새로운 회원을 등록 |
 
+
 **요청**
 ```json
 {
-  "email": "이메일(String)",
-  "password" : "비밀번호(String)",
-  "nickname" : "회원 닉네임(String)"
+  "email": "user@example.com",
+  "password" : "password123",
+  "nickname" : "user_nickname"
 }
 ```
 
@@ -22,6 +23,7 @@
 - SUCCESS
 ```json
 {
+  "code" : 201,
   "message" : "회원가입에 성공하였습니다."  
 }
 ```
@@ -29,9 +31,9 @@
 - ERROR
 ```json
 {
-  "error" : "SIGNUP_FAILED",
-  "message" : "회원가입에 실하였습니다."
-  "code" : 400
+  "code" : 400,
+  "message" : "회원가입에 실패하였습니다.",
+  "error" : "SIGNUP_FAILED"
 }
 ```
 
@@ -43,7 +45,7 @@
 **요청**
 ```json
 {
-  "email": "이메일(String)"
+  "email": "user@example.com"
 }
 ```
 **응답**
@@ -51,6 +53,7 @@
 - SUCCESS
 ```json
 {
+  "code" : 202,
   "message" : "인증 코드 전송에 성공하였습니다."
 }
 ```
@@ -58,9 +61,9 @@
 - ERROR
 ```json
 {
-  "error" : "CODE_SEND_FAILED"
-  "message" : "인증 코드 전송에 실패하였습니다."
-  "code" : 400
+  "code" : 400,
+  "message" : "인증 코드 전송에 실패하였습니다.",
+  "error" : "EMAIL_SEND_FAILED" 
 }
 ```
 
@@ -72,8 +75,8 @@
 **요청**
 ```json
 {
-  "email": "이메일(String)",
-  "code" : "인증코드(String)"
+  "email": "user@example.com",
+  "code" : "code1234"
 }
 ```
 **응답**
@@ -81,6 +84,7 @@
 - SUCCESS
 ```json
 {
+  "code" : 200,
   "message" : "인증에 성공하였습니다."  
 }
 ```
@@ -88,8 +92,10 @@
 - ERROR
 ```json
 {
-  "error" : "CODE_VERIFICATION_FAILED",
-  "message" : "인증에 실패하였습니다."
+  "code" : 400,
+   "message" : "인증에 실패하였습니다.",
+  "error" : "EMAIL_VERIFICATION_FAILED"
+ 
 }
 ```
 
@@ -101,8 +107,8 @@
 **요청**
 ```json
 {
-  "email": "이메일(String)",
-  "password" : "비밀번호(String)"
+  "email": "user@example.com",
+  "password" : "password123"
 }
 ```
 **응답**
@@ -110,6 +116,7 @@
 - SUCCESS
 ```json
 {
+  "code" : 200,
   "message" : "로그인에 성공하였습니다."
 }
 ```
@@ -117,6 +124,7 @@
 - ERROR
 ```json
 {
+  "code" : 400,
   "error" : "LOGIN_FAILED",
   "message" : "로그인에 실패하였습니다."
 }
@@ -125,39 +133,160 @@
 ### 1.5 내 정보 조회 
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| /api/members/me | GET | 내 정보 조회 |
+| /api/members/info | GET | 내 정보 조회 |
 
 **요청**
 
 **응답**
 
-- SUCCESS
+- SUCCESS  
+```json
+{
+  "code" : 200,
+  "message" : "내 정보 조회에 성공하였습니다.",
+  "email": "user@example.com",
+  "nickname" : "user_nickname"
+}
+```
+  
 
 - ERROR
 ```json
 {
-  "message" : "내 정보 조회에 실패하였습니다."
+  "code" : 400,  
+  "message" : "내 정보 조회에 실패하였습니다.",
+  "error" : "INFO_FAILED"
 }
 ```
-
-**예외**
 
 - 로그인 되어있지 않은 경우
 ```json
 {
-  "error" : "UNAUTHORIZED"
-  "message" : "로그인이 필요합니다."
-  "code" : 401
+  "code" : 401,
+  "message" : "로그인이 필요합니다.",  
+  "error" : "UNAUTHORIZED"  
 }
 ```
 - 토큰이 만료된 경우
 ```json
 {
-  "error" : "UNAUTHORIZED"
-  "message" : "토큰이 만료되었습니다."
-  "code" : 401
+  "code" : 401,
+  "message" : "토큰이 만료되었습니다.",
+  "error" : "UNAUTHORIZED"  
 }
 ```
+
+### 1.6 로그아웃
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/members/logout | POST | JWT 토큰을 삭제하여 로그아웃 처리 |
+
+**요청**
+
+**응답**
+
+- SUCCESS  
+```json
+{
+  "code" : 200,
+  "message" : "로그아웃에 성공하였습니다."
+}
+```
+
+
+  ### 1.7 닉네임 변경
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/members/nickname | PATCH | 내 정보 조회 페이지에서 닉네임을 변경 |
+
+**요청**
+
+```json
+{
+  "nickname" : "user_nickname"
+}
+```
+**응답**
+
+- SUCCESS
+```json
+{
+  "code" : 200,
+  "message" : "닉네임 변경에 성공하였습니다."
+}
+```
+
+- ERROR
+```json
+{
+  "code" : 400,
+  "error" : "CHANGE_NICKNAME_FAILED",
+  "message" : "닉네임 변경에 실패하였습니다."
+}
+```
+
+  ### 1.8 비밀번호 변경
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/members/password | PATCH | 내 정보 조회 페이지에서 비밀번호를 변경 |
+
+**요청**
+```json
+{
+  "password" : "password123",
+  "newPassword" : "new_password123"
+}
+```
+**응답**
+
+- SUCCESS
+```json
+{
+  "code" : 200,
+  "message" : "비밀번호 변경에 성공하였습니다."
+}
+```
+
+- ERROR
+```json
+{
+  "code" : 400,
+  "error" : "CHANGE_PASSWORD_FAILED",
+  "message" : "비밀번호 변경에 실패하였습니다."
+}
+```
+
+  ### 1.9 회원탈퇴
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/members/unregister | DELETE | 내 정보 조회 페이지에서 회원탈퇴 |
+
+**요청**
+```json
+{
+  "password" : "password123"
+}
+```
+**응답**
+
+- SUCCESS
+```json
+{
+  "code" : 200,
+  "message" : "회원탈퇴에 성공하였습니다."
+}
+```
+
+- ERROR
+```json
+{
+  "code" : 400,
+  "error" : "UNREGISTER_FAILED",
+  "message" : "회원탈퇴에 실패하였습니다."
+}
+```
+
+
 
 
 
