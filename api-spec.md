@@ -10,6 +10,7 @@
 
 
 **요청**
+- Body
 ```json
 {
   "email": "user@example.com",
@@ -20,7 +21,7 @@
 
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 201,
@@ -28,7 +29,7 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
@@ -43,6 +44,7 @@
 | /api/members/email/send | POST | 이메일 인증을 위한 인증 코드 전송 |
 
 **요청**
+- Body
 ```json
 {
   "email": "user@example.com"
@@ -50,7 +52,7 @@
 ```
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 202,
@@ -58,7 +60,7 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
@@ -73,6 +75,7 @@
 | /api/members/email/verification | POST | 전송된 인증 코드 일치 여부 확인 |
 
 **요청**
+- Body
 ```json
 {
   "email": "user@example.com",
@@ -81,7 +84,7 @@
 ```
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 200,
@@ -89,11 +92,11 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
-   "message" : "인증에 실패하였습니다.",
+  "message" : "인증에 실패하였습니다.",
   "error" : "EMAIL_VERIFICATION_FAILED"
  
 }
@@ -105,6 +108,7 @@
 | /api/members/login | POST | 회원 로그인 |
 
 **요청**
+- Body
 ```json
 {
   "email": "user@example.com",
@@ -113,7 +117,7 @@
 ```
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 200,
@@ -121,7 +125,7 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
@@ -133,13 +137,18 @@
 ### 1.5 내 정보 조회 
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| /api/members/info | GET | 내 정보 조회 |
+| /api/members/me | GET | 내 정보 조회 |
 
 **요청**
+- Header
+  
+```  
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
 
 **응답**
 
-- SUCCESS  
+- Success 
 ```json
 {
   "code" : 200,
@@ -150,12 +159,12 @@
 ```
   
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,  
   "message" : "내 정보 조회에 실패하였습니다.",
-  "error" : "INFO_FAILED"
+  "error" : "ME_FAILED"
 }
 ```
 
@@ -179,13 +188,18 @@
 ### 1.6 로그아웃
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| /api/members/logout | POST | JWT 토큰을 삭제하여 로그아웃 처리 |
+| /api/members/logout | POST | 클라이언트에서 JWT 토큰을 삭제하여 로그아웃 처리 |
 
 **요청**
+- Header
+  
+```  
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
 
 **응답**
 
-- SUCCESS  
+- Success  
 ```json
 {
   "code" : 200,
@@ -197,10 +211,15 @@
   ### 1.7 닉네임 변경
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| /api/members/nickname | PATCH | 내 정보 조회 페이지에서 닉네임을 변경 |
+| /api/members/me/nickname | PATCH | 내 정보 조회 페이지에서 닉네임을 변경 |
 
 **요청**
-
+- Header
+  
+```  
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
+- Body
 ```json
 {
   "nickname" : "user_nickname"
@@ -208,7 +227,7 @@
 ```
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 200,
@@ -216,7 +235,7 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
@@ -228,18 +247,24 @@
   ### 1.8 비밀번호 변경
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| /api/members/password | PATCH | 내 정보 조회 페이지에서 비밀번호를 변경 |
+| /api/members/me/password | PATCH | 내 정보 조회 페이지에서 비밀번호를 변경 |
 
 **요청**
+- Header
+  
+```  
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
+- Body
 ```json
 {
-  "password" : "password123",
+  "currentPassword" : "password123",
   "newPassword" : "new_password123"
 }
 ```
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 200,
@@ -247,7 +272,7 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
@@ -259,9 +284,15 @@
   ### 1.9 회원탈퇴
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| /api/members/unregister | DELETE | 내 정보 조회 페이지에서 회원탈퇴 |
+| DELETE /api/members/me | DELETE | 내 정보 조회 페이지에서 회원탈퇴 |
 
 **요청**
+- Header
+  
+```  
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
+- Body
 ```json
 {
   "password" : "password123"
@@ -269,7 +300,7 @@
 ```
 **응답**
 
-- SUCCESS
+- Success
 ```json
 {
   "code" : 200,
@@ -277,7 +308,7 @@
 }
 ```
 
-- ERROR
+- Error
 ```json
 {
   "code" : 400,
