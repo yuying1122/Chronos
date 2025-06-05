@@ -374,9 +374,9 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 {
   "title" : "schedule_title"
   "description" : "schedule_description"
-  "category : "schedule_category"
-  "startAt : "YYYY-MM-DD HH:MM"
-  "endAt : "YYYY-MM-DD HH:MM"
+  "category" : "schedule_category"
+  "startAt" : "YYYY-MM-DD HH:MM"
+  "endAt" : "YYYY-MM-DD HH:MM"
 }
 ```
 
@@ -416,9 +416,9 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 {
   "title" : "schedule_title"
   "description" : "schedule_description"
-  "category : "schedule_category"
-  "startAt : "YYYY-MM-DD HH:MM"
-  "endAt : "YYYY-MM-DD HH:MM"
+  "category" : "schedule_category"
+  "startAt" : "YYYY-MM-DD HH:MM"
+  "endAt" : "YYYY-MM-DD HH:MM"
 }
 ```
 
