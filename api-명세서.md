@@ -207,6 +207,15 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 }
 ```
 
+- 토큰이 만료된 경우
+```json
+{
+  "code" : 401,
+  "message" : "토큰이 만료되었습니다.",
+  "error" : "UNAUTHORIZED"  
+}
+```
+
 
   ### 1.7 닉네임 변경
 | URI | METHOD | 설명 |
@@ -244,6 +253,16 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 }
 ```
 
+- 토큰이 만료된 경우
+```json
+{
+  "code" : 401,
+  "message" : "토큰이 만료되었습니다.",
+  "error" : "UNAUTHORIZED"  
+}
+```
+
+
   ### 1.8 비밀번호 변경
 | URI | METHOD | 설명 |
 |---------------|------|-------|
@@ -258,7 +277,7 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 - Body
 ```json
 {
-  "currentPassword" : "password123",
+  "currentPassword" : "current_password123",
   "newPassword" : "new_password123"
 }
 ```
@@ -281,10 +300,19 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 }
 ```
 
+- 토큰이 만료된 경우
+```json
+{
+  "code" : 401,
+  "message" : "토큰이 만료되었습니다.",
+  "error" : "UNAUTHORIZED"  
+}
+```
+
   ### 1.9 회원탈퇴
 | URI | METHOD | 설명 |
 |---------------|------|-------|
-| DELETE /api/members/me | DELETE | 내 정보 조회 페이지에서 회원탈퇴 |
+| /api/members/me | DELETE | 내 정보 조회 페이지에서 회원탈퇴 |
 
 **요청**
 - Header
@@ -317,7 +345,133 @@ Authorization: Bearer <JWT_ACCESS_TOKEN>
 }
 ```
 
+- 토큰이 만료된 경우
+```json
+{
+  "code" : 401,
+  "message" : "토큰이 만료되었습니다.",
+  "error" : "UNAUTHORIZED"  
+}
+```
 
+---
+
+## 2. 일정 관리
+
+### 2.1 일정 추가
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/schedules/ | POST | 새로운 일정을 추가 |
+
+**요청**
+- Header
+```
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
+  
+- Body
+```json
+{
+  "title" : "schedule_title"
+  "description" : "schedule_description"
+  "category : "schedule_category"
+  "startAt : "YYYY-MM-DD HH:MM"
+  "endAt : "YYYY-MM-DD HH:MM"
+}
+```
+
+**응답**
+
+- Success
+```json
+{
+  "code" : 201,
+  "message" : "일정 추가에 성공하였습니다."  
+}
+```
+
+- Error
+```json
+{
+  "code" : 400,
+  "message" : "일정 추가에 실패하였습니다.",
+  "error" : "SCHEDULE_ADD_FAILED"
+}
+```
+
+### 2.2 일정 수정
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/schedules/{scheduleId} | PUT | 등록된 일정을 수정정 |
+
+
+**요청**
+- Header
+```
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```
+  
+- Body
+```json
+{
+  "title" : "schedule_title"
+  "description" : "schedule_description"
+  "category : "schedule_category"
+  "startAt : "YYYY-MM-DD HH:MM"
+  "endAt : "YYYY-MM-DD HH:MM"
+}
+```
+
+**응답**
+
+- Success
+```json
+{
+  "code" : 200,
+  "message" : "일정 수정에 성공하였습니다."  
+}
+```
+
+- Error
+```json
+{
+  "code" : 400,
+  "message" : "일정 수정에 실패하였습니다.",
+  "error" : "SCHEDULE_UPDATE_FAILED"
+}
+```
+
+### 2.3 일정 삭제
+| URI | METHOD | 설명 |
+|---------------|------|-------|
+| /api/schedules/{scheduleId} | DELETE | 등록된 일정을 삭제 |
+
+
+**요청**
+- Header
+```
+Authorization: Bearer <JWT_ACCESS_TOKEN>
+```  
+
+
+**응답**
+
+- Success
+```json
+{
+  "code" : 200,
+  "message" : "일정 삭제에 성공하였습니다."  
+}
+```
+
+- Error
+```json
+{
+  "code" : 400,
+  "message" : "일정 삭제에 실패하였습니다.",
+  "error" : "SCHEDULE_DELETE_FAILED"
+}
+```
 
 
 
